@@ -8,6 +8,7 @@ public class AziendaenergiaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AziendaenergiaApplication.class, args);
+
 	}
 
 }
