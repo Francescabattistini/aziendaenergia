@@ -2,13 +2,14 @@ package team5.azienda.energia.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class StatoFattura {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +24,4 @@ public class StatoFattura {
         this.fatture = fatture;
     }
 
-    public List<Fattura> getFatture() {
-        return fatture;
-    }
 }

@@ -23,5 +23,6 @@ public class Role {
     private String ruolo;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<User> users;
 }

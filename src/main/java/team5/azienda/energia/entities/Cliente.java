@@ -53,10 +53,12 @@ public class Cliente {
 
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Indirizzo> indirizzi = new ArrayList<>();
+    @ToString.Exclude
+    private List<Indirizzo> indirizzi;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Fattura> fatture = new ArrayList<>();
+    @ToString.Exclude
+    private List<Fattura> fatture;
 
 
 

@@ -9,28 +9,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @ToString
-@Entity
-@Table(name="comuni")
+@AllArgsConstructor
 public class Comune {
-    @Id
-    @GeneratedValue
-    @Setter(AccessLevel.NONE)
-    private long id;//TODO controlla CSV
-
-    @Column(name = "nome_comune")
-    private String nomeComune;
-
-    private int cap;
-
-    private int progressivoComune;
-
-    @OneToMany(mappedBy = "comune")
-    private List<Indirizzo> indirizzi;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "provincia_id")
-    private Provincia provincia;
-
-
-
+   private int progressivo_comune;
+   private String nome_comune;
+   private Provincia provincia;
 }
