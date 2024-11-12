@@ -1,4 +1,4 @@
-package team5.aziendaenergia;
+package team5.azienda.energia;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

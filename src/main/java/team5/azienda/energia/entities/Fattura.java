@@ -1,8 +1,8 @@
-package team5.aziendaenergia.entities;
+package team5.azienda.energia.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import team5.aziendaenergia.enums.TypeStato;
+import team5.azienda.energia.enums.TypeStato;
 
 import java.time.LocalDate;
 
