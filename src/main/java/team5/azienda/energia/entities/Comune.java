@@ -16,17 +16,21 @@ public class Comune {
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private long id;//TODO controlla CSV
+
     @Column(name = "nome_comune")
     private String nomeComune;
 
+    private int cap;
+
+    private int progressivoComune;
+
     @OneToMany(mappedBy = "comune")
     private List<Indirizzo> indirizzi;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provincia_id")
     private Provincia provincia;
 
 
-    public Comune(String nomeComune) {
-        this.nomeComune = nomeComune;
-    }
+
 }

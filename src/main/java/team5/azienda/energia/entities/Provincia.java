@@ -10,23 +10,16 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name="province")
 public class Provincia {
     @Id
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private long id;//TODO controlla CSV
+
     @Column(name = "nome_provincia")
-    private String nomeprovincia;
+    private String nome;
 
-
-    @OneToMany(mappedBy = "indirizzo")
-    private List<Indirizzo> indirizzi;
-    @OneToMany(mappedBy = "comune")
+    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comune> comuni;
 
-    public Provincia(String nomeprovincia, List<Indirizzo> indirizzi) {
-        this.nomeprovincia = nomeprovincia;
-        this.indirizzi = indirizzi;
-    }
 }

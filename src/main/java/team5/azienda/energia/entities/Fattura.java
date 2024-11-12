@@ -2,7 +2,6 @@ package team5.azienda.energia.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import team5.azienda.energia.enums.TypeStato;
 
 import java.time.LocalDate;
 
@@ -17,21 +16,22 @@ public class Fattura {
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private long id;
+
     @Column(name="data_fattura")
     private LocalDate dataFattura;
-    private double importo;
-    private int numero;
-    @Enumerated(EnumType.STRING)
-    private TypeStato typestato;
 
-    @ManyToOne
+    private double importo;
+
+    private int numero;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    public Fattura(LocalDate dataFattura, double importo, int numero, TypeStato typestato) {
-        this.dataFattura = dataFattura;
-        this.importo = importo;
-        this.numero = numero;
-        this.typestato = typestato;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stato_fattura_id")
+    private StatoFattura statoFattura;
+
+
+
 }

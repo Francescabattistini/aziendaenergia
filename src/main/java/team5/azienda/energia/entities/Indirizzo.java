@@ -3,8 +3,6 @@ package team5.azienda.energia.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Setter
 @Getter
 @NoArgsConstructor
@@ -16,26 +14,20 @@ public class Indirizzo {
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private long id;
-    private String via;
-    private int civico;
-    private String località;
-    private int cap;
 
-    @ManyToOne
+    private String via;
+
+    private int civico;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comune_id")
     private Comune comune;
 
-    @ManyToOne
-    @JoinColumn(name = "provincia_id")
-    private Provincia provicia;
 
-    @OneToMany(mappedBy = "indirizzo")
-    private List<Cliente> clienti;
 
-    public Indirizzo(String via, int civico, String località, int cap) {
-        this.via = via;
-        this.civico = civico;
-        this.località = località;
-        this.cap = cap;
-    }
 }
+
