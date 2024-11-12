@@ -1,4 +1,4 @@
-package team5.aziendaenergia.entities;
+package team5.azienda.energia.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
