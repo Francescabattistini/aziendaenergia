@@ -13,5 +13,6 @@ import java.util.List;
 public class Comune {
    private int progressivo_comune;
    private String nome_comune;
+   @Embedded
    private Provincia provincia;
 }
