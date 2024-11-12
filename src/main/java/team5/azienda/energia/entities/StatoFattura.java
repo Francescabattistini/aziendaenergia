@@ -3,10 +3,12 @@ package team5.azienda.energia.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Setter //questo perchè non c'era?
 @Getter
 @NoArgsConstructor
 public class StatoFattura {
