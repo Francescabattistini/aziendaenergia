@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "stato_fatture")
 public class StatoFattura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

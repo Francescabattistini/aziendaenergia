@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -21,8 +20,6 @@ public class Cliente {
 
     @Column(name = "ragione_sociale")
     private String ragioneSociale;
-
-    private String email;
 
     @Column(name = "data_inserimento")
     private LocalDate dataInserimento;
@@ -59,7 +56,6 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<Fattura> fatture;
-
 
 
 }
