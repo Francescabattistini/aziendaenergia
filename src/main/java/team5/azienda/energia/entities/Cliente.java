@@ -23,6 +23,7 @@ public class Cliente {
     private String ragioneSociale;
 
     @Column(name = "data_inserimento")
+    @CreationTimestamp
     private LocalDate dataInserimento;
 
     @Column(name = "data_ultimo_contatto", updatable = false)

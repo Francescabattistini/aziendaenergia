@@ -3,7 +3,6 @@ package team5.azienda.energia.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import team5.azienda.energia.entities.Cliente;
 import team5.azienda.energia.payloadDTO.ClienteDTO;
 import team5.azienda.energia.servicies.ClienteService;
 
@@ -17,11 +16,14 @@ public class ClientiController {
     private ClienteService clienteService;
 
     @GetMapping("/clienti")
-    public List<Cliente> getAllClienti(Pageable pageable) {
-        return clienteService.findAllClienti(pageable).stream().toList();
+    public List<ClienteDTO> getAllClienti(Pageable pageable) {
+        return clienteService.findAllClienti(pageable).stream().map(cliente -> new ClienteDTO(cliente.getRagioneSociale(), cliente.getDataInserimento(),
+                cliente.getDataUltimoContatto(), cliente.getFatturatoAnnuale(), cliente.getPec(), cliente.getTelefono(),
+                cliente.getEmailContatto(), cliente.getNomeContatto(), cliente.getCognomeContatto(),
+                cliente.getTelefonoContatto(), cliente.getLogoAziendale())).toList();
     }
 
-    @PostMapping("/save")
+    @PostMapping("/cliente")
     public void saveCliente(@RequestBody ClienteDTO clienteDTO) {
         clienteService.save(clienteDTO);
     }
