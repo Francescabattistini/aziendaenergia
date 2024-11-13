@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name="indirizzi")
+@Table(name = "indirizzi")
 public class Indirizzo {
     @Id
     @GeneratedValue
@@ -26,7 +26,11 @@ public class Indirizzo {
     @Embedded
     private Comune comune;
 
-
-
+    public Indirizzo(String via, int civico, Cliente cliente, Comune comune) {
+        this.via = via;
+        this.civico = civico;
+        this.cliente = cliente;
+        this.comune = comune;
+    }
 }
 
