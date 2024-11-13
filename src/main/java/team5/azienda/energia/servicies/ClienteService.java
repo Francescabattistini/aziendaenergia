@@ -2,11 +2,10 @@ package team5.azienda.energia.servicies;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team5.azienda.energia.entities.Cliente;
+import team5.azienda.energia.payloadDTO.ClienteDTO;
 import team5.azienda.energia.repositories.ClienteRepo;
 
 import java.util.Optional;
@@ -15,15 +14,17 @@ import java.util.Optional;
 @Service
 public class ClienteService {
     @Autowired
-    private  ClienteRepo clienteRepo;
+    private ClienteRepo clienteRepo;
 
-    public Cliente save (Cliente cliente) {
-        return clienteRepo.save(cliente);
+    public void save(ClienteDTO newCliente) {
+        Cliente cliente = new Cliente(newCliente.ragioneSociale(), newCliente.dataInserimento(),
+                newCliente.dataUltimoContatto(), newCliente.fatturatoAnnuale(), newCliente.pec(),
+                newCliente.telefono(), newCliente.emailContatto(), newCliente.nomeContatto(),
+                newCliente.cognomeContatto(), newCliente.telefonoContatto(), newCliente.logoAziendale());
+        clienteRepo.save(cliente);
     }
 
-   public Page<Cliente> findAllClienti(int size, int page, String sortBy) {
-       if (size > 50) size = 50;
-       Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+   public Page<Cliente> findAllClienti(Pageable pageable) {
        return this.clienteRepo.findAll(pageable);
    }
    public Optional<Cliente> findById(long id) {
@@ -33,7 +34,6 @@ public class ClienteService {
     public Cliente updateCliente(long id, Cliente clienteDetails) {
         return clienteRepo.findById(id).map(cliente -> {
             cliente.setRagioneSociale(clienteDetails.getRagioneSociale());
-            cliente.setEmail(clienteDetails.getEmail());
             cliente.setDataInserimento(clienteDetails.getDataInserimento());
             cliente.setDataUltimoContatto(clienteDetails.getDataUltimoContatto());
             cliente.setFatturatoAnnuale(clienteDetails.getFatturatoAnnuale());
