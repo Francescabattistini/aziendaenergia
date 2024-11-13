@@ -10,14 +10,16 @@ import team5.azienda.energia.entities.Fattura;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.exceptions.NotFoundException;
 import team5.azienda.energia.payloadDTO.FatturaDTO;
+import team5.azienda.energia.repositories.ClienteRepo;
 import team5.azienda.energia.repositories.FatturaRepo;
-
-import java.util.Optional;
 
 @Service
 public class FatturaService {
     @Autowired
     private FatturaRepo fatturaRepo;
+
+    @Autowired
+    private ClienteRepo clienteRepo;
 
     public Fattura saveFattura(FatturaDTO body) {
         this.fatturaRepo.findBynumero(body.numero()).ifPresent(
@@ -41,21 +43,16 @@ public class FatturaService {
         return fatturaRepo.findAll(pageable);
     }
 
-    public Optional<Fattura> findById(long id) {
-        return fatturaRepo.findById(id);
+    public Fattura findById(Long id) {
+        return this.fatturaRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
-    public Fattura updateFattura(long id, FatturaDTO body) {
-        return fatturaRepo.findById(id).map(fattura -> {
-            fattura.setDataFattura(body.dataFattura());
-            fattura.setImporto(body.importo());
-            fattura.setNumero(body.numero());
-            fattura.setCliente(body.cliente());
-            fattura.setStatoFattura(body.statoFattura());
-            return fatturaRepo.save(fattura);
-        }).orElseThrow(() -> new NotFoundException(id));
+    public Fattura findByIdupdateStatoFattura(long id, FatturaDTO body) {
+        Fattura found = this.findById(id);
+        found.setStatoFattura(body.statoFattura());
+        return this.fatturaRepo.save(found);
     }
-
+public Fattura findByDataFattura(int)
 
     public void findByIdAndDelete(long id) {
         Fattura fattura = fatturaRepo.findById(id)

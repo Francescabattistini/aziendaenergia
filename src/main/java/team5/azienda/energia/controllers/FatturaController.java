@@ -20,7 +20,7 @@ public class FatturaController {
     @Autowired
     private FatturaService fatturaService;
 
-    // 1. GET http://localhost:3001/fattures
+    // 1. GET http://localhost:3005/fattures
     @GetMapping
     public Page<Fattura> findAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
                                  @RequestParam(defaultValue = "id") String sortBy) {
@@ -29,7 +29,7 @@ public class FatturaController {
     }
 
 
-    // 2. POST http://localhost:3001/fattures (+ req.body) --> 201
+    // 2. POST http://localhost:3005/fattures (+ req.body) --> 201
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
 
@@ -45,26 +45,25 @@ public class FatturaController {
     }
 
 
-    /*// 3. GET http://localhost:3001/fattures/{userId}
+    // 3. GET http://localhost:3005/fattures/{userId}
     @GetMapping("/{userId}")
-    public User findById(@PathVariable UUID userId) {
-        return this.usersService.findById(userId);
+    public Fattura findById(@PathVariable Long userId) {
+        return this.fatturaService.findById(userId);
     }
 
 
-    // 4. PUT http://localhost:3001/fattures/{userId} (+ req.body)
+    // 4. PUT http://localhost:3005/fattures/{userId} (+ req.body)
     @PutMapping("/{userId}")
-    public User findByIdAndUpdate(@PathVariable UUID userId, @RequestBody @Validated NewUserDTO body, BindingResult validationResult) {
+    public Fattura findByIdAndUpdate(@PathVariable Long id, @RequestBody @Validated FatturaDTO body, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
             validationResult.getAllErrors().forEach(System.out::println);
             throw new BadRequestException("Ci sono stati errori nel payload!");
         }
-        // Ovunque ci sia un body bisognerebbe validarlo!
-        return this.usersService.findByIdAndUpdate(userId, body);
+        return this.fatturaService.findByIdupdateStatoFattura(id, body);
     }
 
 
-    // 5. DELETE http://localhost:3001/fattures/{userId} --> 204
+   /* // 5. DELETE http://localhost:3005/fattures/{userId} --> 204
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable UUID userId) {

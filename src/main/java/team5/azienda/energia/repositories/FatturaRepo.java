@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface FatturaRepo extends JpaRepository<Fattura, Long> {
     Optional<Fattura> findBynumero(Integer numero);
+    
 }
