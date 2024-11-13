@@ -10,6 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @Entity
+@Setter
 @Table(name ="users")
 public class User {
     @Id
@@ -38,7 +39,8 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles = new HashSet<>();
+    @ToString.Exclude
+    private Set<Role> roles;
 
     public User(String username, String email, int password, String nome, String cognome, String avatar, Set<Role> roles) {
         this.username = username;

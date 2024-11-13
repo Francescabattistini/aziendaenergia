@@ -9,17 +9,15 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @ToString
-@Entity
 public class Provincia {
-    @Id
-    @GeneratedValue
-    @Setter(AccessLevel.NONE)
-    private long id;//TODO controlla CSV
+    private String sigla;
+    private String nome_provincia;
+    private String regione;
+    private int codice_provincia;
 
-    @Column(name = "nome_provincia")
-    private String nome;
-
-    @OneToMany(mappedBy = "provincia", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comune> comuni;
-
+    public Provincia(String sigla, String nome_provincia, String regione) {
+        this.sigla = sigla;
+        this.nome_provincia = nome_provincia;
+        this.regione = regione;
+    }
 }

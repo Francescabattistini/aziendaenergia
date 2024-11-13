@@ -26,10 +26,12 @@ public class Fattura {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
+    @ToString.Exclude
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stato_fattura_id")
+    @ToString.Exclude
     private StatoFattura statoFattura;
 
 
