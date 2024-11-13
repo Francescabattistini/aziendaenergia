@@ -13,6 +13,9 @@ import team5.azienda.energia.payloadDTO.FatturaDTO;
 import team5.azienda.energia.repositories.ClienteRepo;
 import team5.azienda.energia.repositories.FatturaRepo;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class FatturaService {
     @Autowired
@@ -47,12 +50,27 @@ public class FatturaService {
         return this.fatturaRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
+    public List<Fattura> findbyCliente(Long id) {
+        return this.fatturaRepo.findByClienteId(id);
+    }
+
     public Fattura findByIdupdateStatoFattura(long id, FatturaDTO body) {
         Fattura found = this.findById(id);
         found.setStatoFattura(body.statoFattura());
         return this.fatturaRepo.save(found);
     }
-public Fattura findByDataFattura(int)
+
+    public List<Fattura> findFattureByStato(String statoFattura) {
+        try {
+            return fatturaRepo.findByStatoFatturaStato(statoFattura);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Fattura> findbyDataFattura(LocalDate data) {
+        return this.fatturaRepo.findByDataFattura(data);
+    }
 
     public void findByIdAndDelete(long id) {
         Fattura fattura = fatturaRepo.findById(id)
