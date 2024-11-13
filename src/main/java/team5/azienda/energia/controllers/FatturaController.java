@@ -26,7 +26,7 @@ public class FatturaController {
     private StatoFatturaService statoFatturaService;
 
     @GetMapping
-    public Page<Fattura> findAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size,
+    public Page<Fattura> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
                                  @RequestParam(defaultValue = "id") String sortBy) {
 
         return this.fatturaService.findAllFatture(page, size, sortBy);
@@ -58,6 +58,7 @@ public class FatturaController {
         return this.fatturaService.findbyCliente(id);
     }
 
+    // Put http://localhost:3005/fattures/fatturaid+ body
     @PutMapping("/{fatturaId}")
     public Fattura findByIdAndUpdate(@PathVariable Long fatturaId, @RequestBody @Validated FatturaDTO body, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
@@ -73,11 +74,17 @@ public class FatturaController {
         return fatturaService.findbyDataFattura(data);
     }
 
-    //Get http://localhost:3001/fattures/stato/PAGATA
+    //Get http://localhost:3005/fattures/stato/PAGATA(esempio)
     @GetMapping("/stato/{statoFatturaId}")
     public List<Fattura> findFattureByStato(@PathVariable String statoFattura) {
 
         return fatturaService.findFattureByStato(statoFattura);
+    }
+
+    //GET http://localhost:3005/fatture/importo?importo=100.50
+    @GetMapping("/importo")
+    public List<Fattura> getFattureByImporto(@RequestParam double importo) {
+        return fatturaService.findByImporto(importo);
     }
 
     @DeleteMapping("/{userId}")

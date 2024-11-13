@@ -50,6 +50,7 @@ public class FatturaService {
         return this.fatturaRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
+    // TODO da provare dopo cliente ora non ho il database
     public List<Fattura> findbyCliente(Long id) {
         return this.fatturaRepo.findByClienteId(id);
     }
@@ -66,6 +67,11 @@ public class FatturaService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // Metodo per trovare le fatture in base all'importo
+    public List<Fattura> findByImporto(double importo) {
+        return fatturaRepo.findByImporto(importo);
     }
 
     public List<Fattura> findbyDataFattura(LocalDate data) {
