@@ -40,8 +40,8 @@ public class FatturaService {
         return this.fatturaRepo.save(newUser);
     }
 
-    public Page<Fattura> findAllFatture(int size, int page, String sortBy) {
-        if (size > 50) size = 50;
+    public Page<Fattura> findAllFatture(int page, int size, String sortBy) {
+        if (size > 10) size = 10;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         return fatturaRepo.findAll(pageable);
     }
