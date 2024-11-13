@@ -25,6 +25,7 @@ public class FatturaController {
     @Autowired
     private StatoFatturaService statoFatturaService;
 
+    //GET http://localhost:3005/fattures?page=0/1 etc
     @GetMapping
     public Page<Fattura> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
                                  @RequestParam(defaultValue = "id") String sortBy) {
@@ -48,7 +49,7 @@ public class FatturaController {
     }
 
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{fatturaId}")
     public Fattura findById(@PathVariable Long userId) {
         return this.fatturaService.findById(userId);
     }

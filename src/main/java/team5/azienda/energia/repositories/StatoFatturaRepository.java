@@ -6,4 +6,5 @@ import team5.azienda.energia.entities.StatoFattura;
 
 @Repository
 public interface StatoFatturaRepository extends JpaRepository<StatoFattura, Long> {
+
 }
