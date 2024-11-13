@@ -10,14 +10,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name="fatture")
+@Table(name = "fatture")
 public class Fattura {
     @Id
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private long id;
 
-    @Column(name="data_fattura")
+    @Column(name = "data_fattura")
     private LocalDate dataFattura;
 
     private double importo;
@@ -34,6 +34,11 @@ public class Fattura {
     @ToString.Exclude
     private StatoFattura statoFattura;
 
-
-
+    public Fattura(LocalDate dataFattura, double importo, int numero, Cliente cliente, StatoFattura statoFattura) {
+        this.dataFattura = dataFattura;
+        this.importo = importo;
+        this.numero = numero;
+        this.cliente = cliente;
+        this.statoFattura = statoFattura;
+    }
 }

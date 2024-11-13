@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import team5.azienda.energia.entities.Fattura;
+import team5.azienda.energia.exceptions.BadRequestException;
+import team5.azienda.energia.exceptions.NotFoundException;
+import team5.azienda.energia.payloadDTO.FatturaDTO;
 import team5.azienda.energia.repositories.FatturaRepo;
 
 import java.util.Optional;
@@ -16,9 +19,20 @@ public class FatturaService {
     @Autowired
     private FatturaRepo fatturaRepo;
 
-    //DA MODIFICARE POI
-    public Fattura save(Fattura fattura) {
-        return fatturaRepo.save(fattura);
+    public Fattura saveFattura(FatturaDTO body) {
+        this.fatturaRepo.findBynumero(body.numero()).ifPresent(
+                user -> {
+                    throw new BadRequestException("Il numero fattura scritto  " + body.numero() + " è già in uso!");
+                }
+        );
+        Fattura newUser = new Fattura(
+                body.dataFattura(),
+                body.importo(),
+                body.numero(),
+                body.cliente(),
+                body.statoFattura());
+
+        return this.fatturaRepo.save(newUser);
     }
 
     public Page<Fattura> findAllFatture(int size, int page, String sortBy) {
@@ -31,23 +45,23 @@ public class FatturaService {
         return fatturaRepo.findById(id);
     }
 
-    //DA MODIFICARE POI
-   /* public Fattura updateFattura(long id, Fattura fatturaDetails) {
+    public Fattura updateFattura(long id, FatturaDTO body) {
         return fatturaRepo.findById(id).map(fattura -> {
-            fattura.setDataFattura(fatturaDetails.getDataFattura());
-            fattura.setImporto(fatturaDetails.getImporto());
-            fattura.setNumero(fatturaDetails.getNumero());
-            fattura.setCliente(fatturaDetails.getCliente());
-            fattura.setStatoFattura(fatturaDetails.getStatoFattura());
+            fattura.setDataFattura(body.dataFattura());
+            fattura.setImporto(body.importo());
+            fattura.setNumero(body.numero());
+            fattura.setCliente(body.cliente());
+            fattura.setStatoFattura(body.statoFattura());
             return fatturaRepo.save(fattura);
-        }).orElseThrow(() -> new NotFoundException("Fattura non trovata con ID: " + id));
+        }).orElseThrow(() -> new NotFoundException(id));
     }
 
-  //DA MODIFICARE POI
+
     public void findByIdAndDelete(long id) {
         Fattura fattura = fatturaRepo.findById(id)
-                .orElseThrow(() -> new NotFoundException("Fattura non trovata con ID: " + id));
+                .orElseThrow(() -> new NotFoundException(id));
         fatturaRepo.delete(fattura);
-    }*/
+    }
+
 
 }
