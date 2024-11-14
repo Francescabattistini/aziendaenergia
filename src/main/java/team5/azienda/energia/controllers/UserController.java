@@ -79,8 +79,6 @@ public class UserController {
     //6.Upload Immagine
     @PatchMapping("/{userId}/img")
     public String uploadAvatar (@PathVariable long userId, @RequestParam("img") MultipartFile file) {
-        // "avatar" deve corrispondere ESATTAMENTE al campo del FormData che ci invia il Frontend
-        // Se non corrisponde, non troverò il file
         return this.userService.uploadImg(file, userId);
     }
 }

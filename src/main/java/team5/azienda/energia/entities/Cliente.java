@@ -7,8 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.util.List;
 
-@Setter
-@Getter
+
 @NoArgsConstructor
 @ToString
 @Entity
@@ -89,5 +88,109 @@ public class Cliente {
         this.cognomeContatto = cognomeContatto;
         this.telefonoContatto = telefonoContatto;
         this.logoAziendale = logoAziendale;
+    }
+
+    public String getRagioneSociale() {
+        return ragioneSociale;
+    }
+
+    public void setRagioneSociale(String ragioneSociale) {
+        this.ragioneSociale = ragioneSociale;
+    }
+
+    public LocalDate getDataInserimento() {
+        return dataInserimento;
+    }
+
+    public void setDataInserimento(LocalDate dataInserimento) {
+        this.dataInserimento = dataInserimento;
+    }
+
+    public LocalDate getDataUltimoContatto() {
+        return dataUltimoContatto;
+    }
+
+    public void setDataUltimoContatto(LocalDate dataUltimoContatto) {
+        this.dataUltimoContatto = dataUltimoContatto;
+    }
+
+    public double getFatturatoAnnuale() {
+        return fatturatoAnnuale;
+    }
+
+    public void setFatturatoAnnuale(double fatturatoAnnuale) {
+        this.fatturatoAnnuale = fatturatoAnnuale;
+    }
+
+    public String getPec() {
+        return pec;
+    }
+
+    public void setPec(String pec) {
+        this.pec = pec;
+    }
+
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmailContatto() {
+        return emailContatto;
+    }
+
+    public void setEmailContatto(String emailContatto) {
+        this.emailContatto = emailContatto;
+    }
+
+    public String getNomeContatto() {
+        return nomeContatto;
+    }
+
+    public void setNomeContatto(String nomeContatto) {
+        this.nomeContatto = nomeContatto;
+    }
+
+    public String getCognomeContatto() {
+        return cognomeContatto;
+    }
+
+    public void setCognomeContatto(String cognomeContatto) {
+        this.cognomeContatto = cognomeContatto;
+    }
+
+    public int getTelefonoContatto() {
+        return telefonoContatto;
+    }
+
+    public void setTelefonoContatto(int telefonoContatto) {
+        this.telefonoContatto = telefonoContatto;
+    }
+
+    public String getLogoAziendale() {
+        return logoAziendale;
+    }
+
+    public void setLogoAziendale(String logoAziendale) {
+        this.logoAziendale = logoAziendale;
+    }
+
+    public List<Indirizzo> getIndirizzi() {
+        return indirizzi;
+    }
+
+    public void setIndirizzi(List<Indirizzo> indirizzi) {
+        this.indirizzi = indirizzi;
+    }
+
+    public List<Fattura> getFatture() {
+        return fatture;
+    }
+
+    public void setFatture(List<Fattura> fatture) {
+        this.fatture = fatture;
     }
 }

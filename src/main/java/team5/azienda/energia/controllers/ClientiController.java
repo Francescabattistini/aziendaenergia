@@ -3,6 +3,7 @@ package team5.azienda.energia.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.Cliente;
 import team5.azienda.energia.payloadDTO.ClienteDTO;
 import team5.azienda.energia.servicies.ClienteService;
@@ -36,5 +37,9 @@ public class ClientiController {
         return clienteService.deleteCliente(id);
     }
 
+    @PatchMapping("/{clienteId}/logo")
+    public String uploadLogo(@PathVariable("clienteId")long id, @RequestParam("logo")MultipartFile file) {
+        return this.clienteService.uploadLogoAziendale(file, id);
+    }
 
 }
