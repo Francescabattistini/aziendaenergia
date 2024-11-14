@@ -41,6 +41,7 @@ public class Provincia {
         this.regione =regione;
     }
 
+
     public void setCodiceProvincia(String codiceProvincia) {
         this.codiceProvincia = codiceProvincia;
     }

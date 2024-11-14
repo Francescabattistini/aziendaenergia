@@ -29,6 +29,7 @@ public class Comune {
 
    @JsonIgnore
    @OneToMany(mappedBy = "comune")
+   @JsonIgnore
    private List<Indirizzo> indirizzi;
 
    public Comune( String codiceComune, String nome, Provincia provincia) {

@@ -1,11 +1,14 @@
 package team5.azienda.energia.servicies;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.Role;
 import team5.azienda.energia.entities.User;
 import team5.azienda.energia.exceptions.BadRequestException;
@@ -14,11 +17,14 @@ import team5.azienda.energia.payloadDTO.UserDTO;
 import team5.azienda.energia.repositories.RoleRepo;
 import team5.azienda.energia.repositories.UserRepository;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
+    @Autowired
+    private Cloudinary cloudinaryUploader;
     @Autowired
     private UserRepository userRepository;
 
@@ -96,5 +102,19 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public String uploadImg(MultipartFile file, long id) {
 
-}
+        String url = null;
+        try {
+            url = (String) cloudinaryUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+        } catch (IOException e) {
+            throw new BadRequestException("Ci sono stati problemi con l'upload del file!");
+        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id));
+        user.setAvatar(url);
+        this.userRepository.save(user);
+
+        return url;
+
+}}

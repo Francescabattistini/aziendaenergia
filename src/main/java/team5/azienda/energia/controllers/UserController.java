@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.User;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.exceptions.NotFoundException;
@@ -17,6 +18,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+
 
     @Autowired
     private UserService userService;
@@ -71,5 +74,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable Long userId) {
         this.userService.findByIdAndDelete(userId);
+    }
+
+    //6.Upload Immagine
+    @PatchMapping("/{userId}/img")
+    public String uploadAvatar (@PathVariable long userId, @RequestParam("img") MultipartFile file) {
+        return this.userService.uploadImg(file, userId);
     }
 }
