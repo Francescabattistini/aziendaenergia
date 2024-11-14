@@ -27,7 +27,6 @@ public class Comune {
   @JoinColumn(name = "provincia_id")
    private Provincia provincia;
 
-   @JsonIgnore
    @OneToMany(mappedBy = "comune")
    @JsonIgnore
    private List<Indirizzo> indirizzi;

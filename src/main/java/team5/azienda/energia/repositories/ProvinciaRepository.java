@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import team5.azienda.energia.entities.Comune;
 import team5.azienda.energia.entities.Provincia;
 
 import java.util.Optional;
@@ -23,4 +24,6 @@ public interface ProvinciaRepository extends JpaRepository<Provincia, Long> {
 
     @Query("SELECT p FROM Provincia p JOIN fetch p.comuni ")
     Page<Provincia> findAllJoined(Pageable pageable);
+
+    Optional<Provincia> findByComuniContaining(Comune found);
 }

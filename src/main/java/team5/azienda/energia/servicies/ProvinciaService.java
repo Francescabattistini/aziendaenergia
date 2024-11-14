@@ -12,7 +12,9 @@ import team5.azienda.energia.entities.Comune;
 import team5.azienda.energia.entities.Provincia;
 import team5.azienda.energia.entities.ProvinciaAdapter;
 import team5.azienda.energia.exceptions.NotFoundException;
+import team5.azienda.energia.payloadDTO.ComuneDTO;
 import team5.azienda.energia.payloadDTO.ProvinciaDTO;
+import team5.azienda.energia.repositories.ComuneRepository;
 import team5.azienda.energia.repositories.ProvinciaRepository;
 
 import java.io.BufferedReader;
@@ -29,6 +31,8 @@ public class ProvinciaService {
     @Autowired
     private ProvinciaRepository pr;
 
+    @Autowired
+    private ComuneRepository cr;
 
     @Autowired
     private Validator validator;
@@ -40,6 +44,10 @@ public class ProvinciaService {
     }
 
 
+    public Provincia findByComune(String nomeComune) {
+        Comune found = this.cr.findByNome(nomeComune).orElseThrow(() -> new NotFoundException("Provincia non trovata"));
+        return this.pr.findByComuniContaining(found).orElseThrow(() -> new NotFoundException("Provincia non trovata"));
+    }
 
     public Optional<Provincia> findBySigla(String sigla) {
         if (sigla == null || sigla.isEmpty()) {

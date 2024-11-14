@@ -26,9 +26,9 @@ public class ComuneController {
     }
 
     @GetMapping("/province")
-    public String findAllProvince(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "25") int size,
+    public Page<Provincia> findAllProvince(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "25") int size,
                                            @RequestParam(defaultValue = "nome") String sortBy) {
-        return this.ps.findAll(page, size, sortBy).forEach(p -> p.getComunes());
+        return this.ps.findAll(page, size, sortBy);
     }
 
     @PostMapping("/comuni")
@@ -38,5 +38,10 @@ public class ComuneController {
         String pathComuni = "src/main/resources/comuni-italiani.csv";
         ps.estrazioneProvinceCsv(pathProvince);
         cs.estrazioneComuniCsv(pathComuni);
+    }
+
+    @GetMapping("/{nomeComune}")
+    public Provincia findProvincia(@PathVariable("nomeComune") String nomeComune) {
+        return this.ps.findByComune(nomeComune);
     }
 }
