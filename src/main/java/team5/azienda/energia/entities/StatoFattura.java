@@ -10,7 +10,9 @@ import java.util.List;
 @Entity
 @Setter //questo perchè non c'era?
 @Getter
+@Setter
 @NoArgsConstructor
+@Table(name = "stato_fatture")
 public class StatoFattura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +23,9 @@ public class StatoFattura {
     @OneToMany(mappedBy = "statoFattura", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Fattura> fatture;
 
-    public StatoFattura(String stato, List<Fattura> fatture) {
+    public StatoFattura(String stato) {
         this.stato = stato;
-        this.fatture = fatture;
     }
+
 
 }

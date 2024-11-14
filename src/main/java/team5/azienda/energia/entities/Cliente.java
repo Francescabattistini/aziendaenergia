@@ -2,9 +2,9 @@ package team5.azienda.energia.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -22,16 +22,17 @@ public class Cliente {
     @Column(name = "ragione_sociale")
     private String ragioneSociale;
 
-    private String email;
-
     @Column(name = "data_inserimento")
+    @CreationTimestamp
     private LocalDate dataInserimento;
 
-    @Column(name = "data_ultimo_contatto")
+    @Column(name = "data_ultimo_contatto", updatable = false)
+    @CreationTimestamp
     private LocalDate dataUltimoContatto;
 
     @Column(name = "fatturato_annuale")
     private double fatturatoAnnuale;
+
     private String pec;
 
     private int telefono;
@@ -60,6 +61,33 @@ public class Cliente {
     @ToString.Exclude
     private List<Fattura> fatture;
 
+    public Cliente(String ragioneSociale, LocalDate dataInserimento, LocalDate dataUltimoContatto, double fatturatoAnnuale, String pec, int telefono, String emailContatto, String nomeContatto, String cognomeContatto, int telefonoContatto, String logoAziendale, List<Indirizzo> indirizzi, List<Fattura> fatture) {
+        this.ragioneSociale = ragioneSociale;
+        this.dataInserimento = dataInserimento;
+        this.dataUltimoContatto = dataUltimoContatto;
+        this.fatturatoAnnuale = fatturatoAnnuale;
+        this.pec = pec;
+        this.telefono = telefono;
+        this.emailContatto = emailContatto;
+        this.nomeContatto = nomeContatto;
+        this.cognomeContatto = cognomeContatto;
+        this.telefonoContatto = telefonoContatto;
+        this.logoAziendale = logoAziendale;
+        this.indirizzi = indirizzi;
+        this.fatture = fatture;
+    }
 
-
+    public Cliente(String ragioneSociale, LocalDate dataInserimento, LocalDate dataUltimoContatto, double fatturatoAnnuale, String pec, int telefono, String emailContatto, String nomeContatto, String cognomeContatto, int telefonoContatto, String logoAziendale) {
+        this.ragioneSociale = ragioneSociale;
+        this.dataInserimento = dataInserimento;
+        this.dataUltimoContatto = dataUltimoContatto;
+        this.fatturatoAnnuale = fatturatoAnnuale;
+        this.pec = pec;
+        this.telefono = telefono;
+        this.emailContatto = emailContatto;
+        this.nomeContatto = nomeContatto;
+        this.cognomeContatto = cognomeContatto;
+        this.telefonoContatto = telefonoContatto;
+        this.logoAziendale = logoAziendale;
+    }
 }
