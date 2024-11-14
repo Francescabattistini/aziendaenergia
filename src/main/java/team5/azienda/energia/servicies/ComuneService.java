@@ -47,7 +47,7 @@ public class ComuneService {
     public Page<Comune> findAll(int page, int size, String sortBy) {
         if (size >= 100) size = 100;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        return this.cr.findAll(pageable);
+        return this.cr.findAllAndProvincia(pageable);
     }
 
     public void estrazioneComuniCsv(String path) throws IOException {

@@ -3,8 +3,14 @@ package team5.azienda.energia.servicies;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import team5.azienda.energia.entities.Comune;
 import team5.azienda.energia.entities.Provincia;
+import team5.azienda.energia.entities.ProvinciaAdapter;
 import team5.azienda.energia.exceptions.NotFoundException;
 import team5.azienda.energia.payloadDTO.ProvinciaDTO;
 import team5.azienda.energia.repositories.ProvinciaRepository;
@@ -12,8 +18,11 @@ import team5.azienda.energia.repositories.ProvinciaRepository;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProvinciaService {
@@ -91,4 +100,8 @@ public class ProvinciaService {
 
     }
 
+    public Page<Provincia> findAll(int page, int size, String sortBy) {
+        if(size > 50) size = 50;
+        return this.pr.findAll(PageRequest.of(page, size, Sort.by(sortBy)));
+    }
 }

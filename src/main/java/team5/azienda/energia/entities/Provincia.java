@@ -3,9 +3,12 @@ package team5.azienda.energia.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import team5.azienda.energia.payloads.ComuneDTO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Setter
 @Getter
@@ -28,8 +31,9 @@ public class Provincia {
     private String regione;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "provincia")
+    @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY)
     private List<Comune> comuni = new ArrayList<>();
+
 
     public Provincia(String nome, String sigla, String regione) {
         this.nome = nome;

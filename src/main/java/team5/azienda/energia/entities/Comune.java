@@ -1,5 +1,6 @@
 package team5.azienda.energia.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,9 +24,10 @@ public class Comune {
    private String nome;
 
    @ManyToOne
-   @JoinColumn(name = "provincia_id")
+  @JoinColumn(name = "provincia_id")
    private Provincia provincia;
 
+   @JsonIgnore
    @OneToMany(mappedBy = "comune")
    private List<Indirizzo> indirizzi;
 
