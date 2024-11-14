@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
+@Setter //questo perchè non c'era?
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,9 +23,8 @@ public class StatoFattura {
     @OneToMany(mappedBy = "statoFattura", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Fattura> fatture;
 
-    public StatoFattura(String stato, List<Fattura> fatture) {
+    public StatoFattura(String stato) {
         this.stato = stato;
-        this.fatture = fatture;
     }
 
 

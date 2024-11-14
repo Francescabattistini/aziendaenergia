@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import team5.azienda.energia.entities.StatoFattura;
 import team5.azienda.energia.repositories.StatoFatturaRepository;
 
+import java.util.Optional;
+
 @Service
 public class StatoFatturaService {
     @Autowired
@@ -24,6 +26,15 @@ public class StatoFatturaService {
         return statoFatturaRepository.findAll(pageable);
     }
 
+    public StatoFattura findByStatoOrSaveNew(String stato) {
+        Optional<StatoFattura> found = statoFatturaRepository.findStatoFatturaByStato(stato);
+        if (found.isPresent()) {
+            return found.get();
+        } else {
+            StatoFattura statoFatturaToSave = new StatoFattura(stato);
+            return statoFatturaToSave;
+        }
+    }
     /*
     //DA MODIFICARE POI
     public StatoFattura updateStatoFattura(Long id, StatoFattura statoFatturaDetails) {
