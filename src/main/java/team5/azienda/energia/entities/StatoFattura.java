@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
+@Setter //questo perchè non c'era?
 @Getter
 @Setter
 @NoArgsConstructor
