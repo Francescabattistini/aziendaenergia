@@ -3,15 +3,14 @@ package team5.azienda.energia.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @ToString
 @Entity
 @Setter
-@Table(name ="users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue
@@ -40,9 +39,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @ToString.Exclude
-    private Set<Role> roles;
+    private List<Role> roles;
 
-    public User(String username, String email, int password, String nome, String cognome, String avatar, Set<Role> roles) {
+    public User(String username, String email, int password, String nome, String cognome, String avatar, List<Role> roles) {
         this.username = username;
         this.email = email;
         this.password = password;

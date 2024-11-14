@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Set;
+import java.util.List;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name ="roles")
+@Table(name = "roles")
 public class Role {
 
     @Id
@@ -24,5 +24,10 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private Set<User> users;
+    private List<User> users;
+
+    public Role(String ruolo, List<User> users) {
+        this.ruolo = ruolo;
+        this.users = users;
+    }
 }
