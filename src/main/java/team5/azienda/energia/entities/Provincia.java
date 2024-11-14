@@ -1,5 +1,6 @@
 package team5.azienda.energia.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Provincia {
 
     private String regione;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "provincia")
     private List<Comune> comuni = new ArrayList<>();
 
