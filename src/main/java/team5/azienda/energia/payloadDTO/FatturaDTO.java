@@ -2,7 +2,6 @@ package team5.azienda.energia.payloadDTO;
 
 import jakarta.validation.constraints.NotNull;
 import team5.azienda.energia.entities.Cliente;
-import team5.azienda.energia.entities.StatoFattura;
 
 import java.time.LocalDate;
 
@@ -18,6 +17,6 @@ public record FatturaDTO(
         Cliente cliente,
 
         // @NotNull(message = "Lo stato della fattura non può essere nullo.")
-        StatoFattura statoFattura
+        String statoFattura
 ) {
 }

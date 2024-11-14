@@ -22,9 +22,8 @@ public class StatoFattura {
     @OneToMany(mappedBy = "statoFattura", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Fattura> fatture;
 
-    public StatoFattura(String stato, List<Fattura> fatture) {
+    public StatoFattura(String stato) {
         this.stato = stato;
-        this.fatture = fatture;
     }
 
 
