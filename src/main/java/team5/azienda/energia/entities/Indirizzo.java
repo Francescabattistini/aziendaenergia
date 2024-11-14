@@ -23,7 +23,8 @@ public class Indirizzo {
     @JoinColumn(name = "cliente_id")
     @ToString.Exclude
     private Cliente cliente;
-    @Embedded
+    @ManyToOne
+    @JoinColumn(name = "comune_id")
     private Comune comune;
 
 
