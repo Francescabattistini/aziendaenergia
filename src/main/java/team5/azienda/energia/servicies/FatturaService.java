@@ -13,7 +13,6 @@ import team5.azienda.energia.exceptions.NotFoundException;
 import team5.azienda.energia.payloadDTO.FatturaDTO;
 import team5.azienda.energia.repositories.ClienteRepo;
 import team5.azienda.energia.repositories.FatturaRepo;
-import team5.azienda.energia.repositories.StatoFatturaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,53 +21,53 @@ import java.util.List;
 public class FatturaService {
     @Autowired
     private FatturaRepo fatturaRepo;
-    @Autowired
-    StatoFatturaRepository statoFatturaRepository;
+
     @Autowired
     private ClienteRepo clienteRepo;
 
-    //OK
+    @Autowired
+    private StatoFatturaService statoFatturaService;
+
+    // TODO (non è un vero TODO è solo per comunicarvelo ) ho fatto delle modifiche a stato fattura  service e repository per far funzionare il codice qui sotto
     public Fattura saveFattura(FatturaDTO body) {
         this.fatturaRepo.findBynumero(body.numero()).ifPresent(
                 user -> {
                     throw new BadRequestException("Il numero fattura scritto  " + body.numero() + " è già in uso!");
                 }
         );
-        StatoFattura st = new StatoFattura(body.statoFattura());
-        statoFatturaRepository.save(st);
+
+        StatoFattura foundStato = statoFatturaService.findByStatoOrSaveNew(body.statoFattura());
         Fattura newUser = new Fattura(
                 body.dataFattura(),
                 body.importo(),
                 body.numero(),
                 body.cliente(),
-                st);
+                foundStato);
 
         return this.fatturaRepo.save(newUser);
     }
 
-    //OK
     public Page<Fattura> findAllFatture(int page, int size, String sortBy) {
         if (size > 50) size = 50;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         return fatturaRepo.findAll(pageable);
     }
 
-    //OK
     public Fattura findById(Long id) {
         return this.fatturaRepo.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
-    // TODO da provare dopo cliente ora non ho il database
+
+    // TODO da provare dopo cliente service
     public List<Fattura> findbyCliente(Long id) {
         return this.fatturaRepo.findByClienteId(id);
     }
 
-    //OK da vedere
+
     public Fattura findByIdupdateStatoFattura(long id, FatturaDTO body) {
         Fattura found = this.findById(id);
-        StatoFattura st = new StatoFattura(body.statoFattura());
-        statoFatturaRepository.save(st);// qua ci vorrebbe findbysstato fatture su stato fattureservice
-        found.setStatoFattura(st);
+        StatoFattura foundStato = statoFatturaService.findByStatoOrSaveNew(body.statoFattura());
+        found.setStatoFattura(foundStato);
         return this.fatturaRepo.save(found);
     }
 
