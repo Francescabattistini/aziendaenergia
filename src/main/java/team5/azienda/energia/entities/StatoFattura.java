@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Setter //questo perchè non c'era?
 @Getter
-@Setter
 @NoArgsConstructor
 @Table(name = "stato_fatture")
 public class StatoFattura {
