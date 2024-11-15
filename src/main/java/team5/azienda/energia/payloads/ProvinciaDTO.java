@@ -10,8 +10,5 @@ public record ProvinciaDTO(
         @Size(min = 3, max = 15, message = "il nome deve essere almeno di 3 caratteri e massimo di 15")
         String nome_provincia,
         @NotNull(message = "la regione è obbligatoria!")
-        String regione,
-        @NotNull(message = "il codice provincia è obbligatorio!")
-        Integer codice_provincia
-) {
+        String regione) {
 }

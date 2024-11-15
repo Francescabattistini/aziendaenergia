@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import team5.azienda.energia.entities.Comune;
 import team5.azienda.energia.entities.Provincia;
 import team5.azienda.energia.exceptions.NotFoundException;
-import team5.azienda.energia.payloadDTO.ProvinciaDTO;
+import team5.azienda.energia.payloads.ProvinciaDTO;
 import team5.azienda.energia.repositories.ComuneRepository;
 import team5.azienda.energia.repositories.ProvinciaRepository;
 
@@ -33,7 +33,7 @@ public class ProvinciaService {
 
 
     public Provincia save(ProvinciaDTO body) {
-        Provincia newProvince = new Provincia(body.nome(), body.sigla(), body.regione());
+        Provincia newProvince = new Provincia(body.nome_provincia(), body.sigla(), body.regione());
         return this.pr.save(newProvince);
     }
 

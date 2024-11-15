@@ -1,6 +1,7 @@
 package team5.azienda.energia.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -10,9 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.User;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.exceptions.NotFoundException;
-import team5.azienda.energia.payloadDTO.UserDTO;
+import team5.azienda.energia.payloads.UserDTO;
 import team5.azienda.energia.services.UserService;
-
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,7 +29,7 @@ public class UserController {
     public Page<User> findAll(@RequestParam(defaultValue = "1") int page,
                               @RequestParam(defaultValue = "10") int size,
                               @RequestParam(defaultValue = "id") String sortBy) {
-        return this.userService.findAllUsers(page, size, sortBy);
+        return this.userService.findAllUsers( page, size, sortBy);
     }
 
     // 2. POST http://localhost:3005/users (+ req.body) --> 201
@@ -40,7 +40,7 @@ public class UserController {
         if (validationResult.hasErrors()) {
             String message = validationResult.getAllErrors()
                     .stream()
-                    .map(objectError -> objectError.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.joining(". "));
             throw new BadRequestException("Ci sono stati errori nel payload! " + message);
         }
@@ -63,13 +63,12 @@ public class UserController {
         if (validationResult.hasErrors()) {
             String message = validationResult.getAllErrors()
                     .stream()
-                    .map(objectError -> objectError.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.joining(". "));
             throw new BadRequestException("Ci sono stati errori nel payload! " + message);
         }
         return this.userService.updateUser(userId, body);
     }
-
     // 5. DELETE http://localhost:3005/users/{userId} --> 204
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

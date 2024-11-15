@@ -1,8 +1,15 @@
 package team5.azienda.energia.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import team5.azienda.energia.payloads.UserDTO;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -11,7 +18,8 @@ import java.util.List;
 @Entity
 @Setter
 @Table(name = "users")
-public class User {
+@JsonIgnoreProperties({"password","role","enabled","accountNonLocked","credentialsNonExpired","accountNonExpired","authorities"})
+public class User implements UserDetails {
     @Id
     @GeneratedValue
     @Setter(AccessLevel.NONE)
@@ -21,7 +29,7 @@ public class User {
 
     private String email;
 
-    private int password;
+    private String password;
 
     private String nome;
 
@@ -41,7 +49,7 @@ public class User {
     @ToString.Exclude
     private List<Role> roles;
 
-    public User(String username, String email, int password, String nome, String cognome, String avatar, List<Role> roles) {
+    public User(String username, String email, String password, String nome, String cognome, String avatar, List<Role> roles) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -49,6 +57,15 @@ public class User {
         this.cognome = cognome;
         this.avatar = avatar;
         this.roles = roles;
+    }
+
+    public User(UserDTO body){
+        this.username = body.username();
+        this.email = body.email();
+        this.password = body.password();
+        this.nome = body.nome();
+        this.cognome = body.cognome();
+        this.avatar = body.avatar();
     }
 
     public String getUsername() {
@@ -67,11 +84,16 @@ public class User {
         this.email = email;
     }
 
-    public int getPassword() {
-        return password;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> listaGranted = new ArrayList<>();
+        for(Role r : roles) {
+            listaGranted.add(new SimpleGrantedAuthority(r.getRuolo()));
+        }
+        return listaGranted;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -110,4 +132,5 @@ public class User {
     public long getId() {
         return id;
     }
+
 }

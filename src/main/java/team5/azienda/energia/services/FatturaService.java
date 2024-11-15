@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import team5.azienda.energia.entities.Cliente;
 import team5.azienda.energia.entities.Fattura;
 import team5.azienda.energia.entities.StatoFattura;
-import team5.azienda.energia.payloadDTO.FatturaDTO;
+import team5.azienda.energia.exceptions.NotFoundException;
+import team5.azienda.energia.payloads.FatturaDTO;
 import team5.azienda.energia.repositories.ClienteRepo;
 import team5.azienda.energia.repositories.FatturaRepo;
 
@@ -28,10 +29,9 @@ public class FatturaService {
     private StatoFatturaService statoFatturaService;
 
     public Fattura saveFattura(FatturaDTO fatturaDTO) {
-        Cliente cliente = clienteRepo.findById(fatturaDTO.clienteId())
-                .orElseThrow(() -> new RuntimeException("Cliente non trovato con ID: " + fatturaDTO.clienteId()));
+        Cliente cliente = clienteRepo.findById(fatturaDTO.cliente().getId()).orElseThrow(() -> new NotFoundException("Cliente non trovato con ID: " + fatturaDTO.cliente().getId()));
 
-        StatoFattura statoFattura = statoFatturaService.findByStatoOrSaveNew(fatturaDTO.statoFattura());
+        StatoFattura statoFattura = statoFatturaService.findByStatoOrSaveNew(fatturaDTO.statoFattura().getStato());
 
         Fattura fattura = new Fattura();
         fattura.setDataFattura(fatturaDTO.dataFattura());
@@ -48,8 +48,8 @@ public class FatturaService {
                 fattura.getDataFattura(),
                 fattura.getImporto(),
                 fattura.getNumero(),
-                fattura.getCliente().getId(),
-                fattura.getStatoFattura().getStato() // Assumendo che 'getStato' ritorni il nome dello stato
+                fattura.getCliente(),
+                fattura.getStatoFattura()
         );
     }
 
@@ -61,7 +61,7 @@ public class FatturaService {
 
     public Fattura findById(Long id) {
         return this.fatturaRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Fattura non trovata con ID: " + id));
+                .orElseThrow(() -> new NotFoundException("Fattura non trovata con ID: " + id));
     }
 
     public List<Fattura> findByCliente(Long clienteId) {
@@ -70,10 +70,10 @@ public class FatturaService {
 
     public Fattura updateFattura(Long id, FatturaDTO body) {
         Fattura fattura = this.findById(id);
-        StatoFattura statoFattura = statoFatturaService.findByStatoOrSaveNew(body.statoFattura());
+        StatoFattura statoFattura = statoFatturaService.findByStatoOrSaveNew(body.statoFattura().getStato());
         fattura.setStatoFattura(statoFattura);
 
-        // Aggiorna altri campi se necessario
+        // Aggiornamento di altri campi se necessario
         fattura.setDataFattura(body.dataFattura());
         fattura.setImporto(body.importo());
         fattura.setNumero(body.numero());
@@ -95,7 +95,7 @@ public class FatturaService {
 
     public void deleteFattura(long id) {
         Fattura fattura = fatturaRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Fattura non trovata con ID: " + id));
+                .orElseThrow(() -> new NotFoundException("Fattura non trovata con ID: " + id));
         fatturaRepo.delete(fattura);
     }
 }

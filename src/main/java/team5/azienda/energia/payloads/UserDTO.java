@@ -24,7 +24,7 @@ public record UserDTO(
                 regexp = "^(?=.[A-Z])(?=.[a-z])(?=.\\d)(?=.[@$!%?&])[A-Za-z\\d@$!%?&]{8,}$",
                 message = "La password deve contenere almeno una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale"
         )
-        Integer password,
+        String password,
         @NotNull(message = "il nome è obbligatorio!")
         @Size( min=3, max=15, message = "il numero di caratteri dell'username dev'essere tra i 3 e i 15 caratteri ")
         String nome,

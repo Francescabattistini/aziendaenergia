@@ -1,6 +1,10 @@
 package team5.azienda.energia.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team5.azienda.energia.entities.StatoFattura;
@@ -13,12 +17,18 @@ public class StatoFatturaService {
     @Autowired
     private StatoFatturaRepository statoFatturaRepository;
 
-    /**
-     * Trova uno StatoFattura per nome o ne crea uno nuovo se non esiste.
-     *
-     * @param stato Il nome dello stato.
-     * @return Lo StatoFattura trovato o creato.
-     */
+    @Transactional
+    public StatoFattura save(StatoFattura statoFattura) {
+        return statoFatturaRepository.save(statoFattura);
+    }
+
+    public Page<StatoFattura> findAllStatiFattura(int page, int size, String sortBy) {
+        if (size > 50) size = 50;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return statoFatturaRepository.findAll(pageable);
+    }
+
+
     @Transactional
     public StatoFattura findByStatoOrSaveNew(String stato) {
         Optional<StatoFattura> found = statoFatturaRepository.findStatoFatturaByStato(stato);
