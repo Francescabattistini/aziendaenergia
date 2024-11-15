@@ -1,4 +1,4 @@
-package team5.azienda.energia.servicies;
+package team5.azienda.energia.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,7 +31,7 @@ public class IndirizzoService {
         return indirizzoRepo.findById(id);
     }
 
-     //DA MODIFICARE POI
+    //DA MODIFICARE POI
     /* public Indirizzo updateIndirizzo(long id, Indirizzo indirizzoDetails) {
         return indirizzoRepo.findById(id).map(indirizzo -> {
             indirizzo.setVia(indirizzoDetails.getVia());

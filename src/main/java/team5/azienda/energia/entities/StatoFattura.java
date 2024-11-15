@@ -1,31 +1,31 @@
 package team5.azienda.energia.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Entity
-@Setter //questo perchè non c'era?
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-@Table(name = "stato_fatture")
+@ToString
+@Entity
+@Table(name = "stato_fattura")
 public class StatoFattura {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String stato;
 
     @OneToMany(mappedBy = "statoFattura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Fattura> fatture;
 
     public StatoFattura(String stato) {
         this.stato = stato;
     }
-
-
 }

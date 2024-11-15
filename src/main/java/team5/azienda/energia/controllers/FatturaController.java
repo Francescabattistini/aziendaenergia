@@ -9,90 +9,104 @@ import org.springframework.web.bind.annotation.*;
 import team5.azienda.energia.entities.Fattura;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.payloadDTO.FatturaDTO;
-import team5.azienda.energia.servicies.FatturaService;
-import team5.azienda.energia.servicies.StatoFatturaService;
+import team5.azienda.energia.services.FatturaService;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @RestController
-@RequestMapping("/fattures")
+@RequestMapping("/fatture") // Corretto da "/fattures" a "/fatture"
 public class FatturaController {
     @Autowired
     private FatturaService fatturaService;
-    @Autowired
-    private StatoFatturaService statoFatturaService;
 
-    //GET http://localhost:3005/fattures?page=0/1 etc
+    // GET http://localhost:8080/fatture?page=0&size=10&sortBy=id
     @GetMapping
-    public Page<Fattura> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
-                                 @RequestParam(defaultValue = "id") String sortBy) {
-
-        return this.fatturaService.findAllFatture(page, size, sortBy);
+    public Page<FatturaDTO> findAll(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "id") String sortBy) {
+        Page<Fattura> fatturaPage = this.fatturaService.findAllFatture(page, size, sortBy);
+        return fatturaPage.map(fatturaService::convertToDTO);
     }
 
-
+    // POST http://localhost:8080/fatture
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-
-    public Fattura save(@RequestBody @Validated FatturaDTO body, BindingResult validationResult) {
-
+    public FatturaDTO save(@RequestBody @Validated FatturaDTO body, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
-            String message = validationResult.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage())
+            String message = validationResult.getAllErrors().stream()
+                    .map(objectError -> objectError.getDefaultMessage())
                     .collect(Collectors.joining(". "));
             throw new BadRequestException("Ci sono stati errori nel payload! " + message);
         }
 
-        return this.fatturaService.saveFattura(body);
+        Fattura savedFattura = this.fatturaService.saveFattura(body);
+        return this.fatturaService.convertToDTO(savedFattura);
     }
 
-
+    // GET http://localhost:8080/fatture/{fatturaId}
     @GetMapping("/{fatturaId}")
-    public Fattura findById(@PathVariable Long userId) {
-        return this.fatturaService.findById(userId);
+    public FatturaDTO findById(@PathVariable Long fatturaId) {
+        Fattura fattura = this.fatturaService.findById(fatturaId);
+        return this.fatturaService.convertToDTO(fattura);
     }
 
-    @GetMapping("/{id_cliente}/fatture")
-    public List<Fattura> findByCliente(@PathVariable Long id) {
-        return this.fatturaService.findbyCliente(id);
+    // GET http://localhost:8080/fatture/cliente/{clienteId}/fatture
+    @GetMapping("/cliente/{clienteId}/fatture")
+    public List<FatturaDTO> findByCliente(@PathVariable Long clienteId) {
+        List<Fattura> fatture = this.fatturaService.findByCliente(clienteId);
+        return fatture.stream()
+                .map(fatturaService::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    // Put http://localhost:3005/fattures/fatturaid+ body
+    // PUT http://localhost:8080/fatture/{fatturaId}
     @PutMapping("/{fatturaId}")
-    public Fattura findByIdAndUpdate(@PathVariable Long fatturaId, @RequestBody @Validated FatturaDTO body, BindingResult validationResult) {
+    public FatturaDTO updateFattura(@PathVariable Long fatturaId,
+                                    @RequestBody @Validated FatturaDTO body,
+                                    BindingResult validationResult) {
         if (validationResult.hasErrors()) {
-            validationResult.getAllErrors().forEach(System.out::println);
-            throw new BadRequestException("Ci sono stati errori nel payload!");
+            String message = validationResult.getAllErrors().stream()
+                    .map(objectError -> objectError.getDefaultMessage())
+                    .collect(Collectors.joining(". "));
+            throw new BadRequestException("Ci sono stati errori nel payload! " + message);
         }
-        return this.fatturaService.findByIdupdateStatoFattura(fatturaId, body);
+        Fattura updatedFattura = this.fatturaService.updateFattura(fatturaId, body);
+        return this.fatturaService.convertToDTO(updatedFattura);
     }
 
-
+    // GET http://localhost:8080/fatture/data?data=2024-04-27
     @GetMapping("/data")
-    public List<Fattura> findByDataFattura(@RequestParam LocalDate data) {
-        return fatturaService.findbyDataFattura(data);
+    public List<FatturaDTO> findByDataFattura(@RequestParam LocalDate data) {
+        List<Fattura> fatture = fatturaService.findByDataFattura(data);
+        return fatture.stream()
+                .map(fatturaService::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    //Get http://localhost:3005/fattures/stato/PAGATA(esempio)
-    @GetMapping("/stato/{statoFatturaId}")
-    public List<Fattura> findFattureByStato(@PathVariable String statoFattura) {
-
-        return fatturaService.findFattureByStato(statoFattura);
+    // GET http://localhost:8080/fatture/stato/PAGATA
+    @GetMapping("/stato/{statoFattura}")
+    public List<FatturaDTO> findFattureByStato(@PathVariable String statoFattura) {
+        List<Fattura> fatture = fatturaService.findFattureByStato(statoFattura);
+        return fatture.stream()
+                .map(fatturaService::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    //GET http://localhost:3005/fatture/importo?importo=100.50
+    // GET http://localhost:8080/fatture/importo?importo=100.50
     @GetMapping("/importo")
-    public List<Fattura> getFattureByImporto(@RequestParam double importo) {
-        return fatturaService.findByImporto(importo);
+    public List<FatturaDTO> getFattureByImporto(@RequestParam double importo) {
+        List<Fattura> fatture = fatturaService.findByImporto(importo);
+        return fatture.stream()
+                .map(fatturaService::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    @DeleteMapping("/{userId}")
+    // DELETE http://localhost:8080/fatture/{fatturaId}
+    @DeleteMapping("/{fatturaId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void findByIdAndDelete(@PathVariable Long userId) {
-        this.fatturaService.findByIdAndDelete(userId);
+    public void deleteFattura(@PathVariable Long fatturaId) {
+        this.fatturaService.deleteFattura(fatturaId);
     }
-
-
 }

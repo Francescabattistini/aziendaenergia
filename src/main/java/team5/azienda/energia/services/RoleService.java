@@ -1,4 +1,4 @@
-package team5.azienda.energia.servicies;
+package team5.azienda.energia.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

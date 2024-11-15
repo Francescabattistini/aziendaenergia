@@ -10,7 +10,7 @@ import team5.azienda.energia.entities.User;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.exceptions.NotFoundException;
 import team5.azienda.energia.payloadDTO.UserDTO;
-import team5.azienda.energia.servicies.UserService;
+import team5.azienda.energia.services.UserService;
 
 import java.util.stream.Collectors;
 
@@ -26,7 +26,7 @@ public class UserController {
     public Page<User> findAll(@RequestParam(defaultValue = "1") int page,
                               @RequestParam(defaultValue = "10") int size,
                               @RequestParam(defaultValue = "id") String sortBy) {
-        return this.userService.findAllUsers( page, size, sortBy);
+        return this.userService.findAllUsers(page, size, sortBy);
     }
 
     // 2. POST http://localhost:3005/users (+ req.body) --> 201
@@ -66,6 +66,7 @@ public class UserController {
         }
         return this.userService.updateUser(userId, body);
     }
+
     // 5. DELETE http://localhost:3005/users/{userId} --> 204
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

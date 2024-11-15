@@ -1,4 +1,4 @@
-package team5.azienda.energia.servicies;
+package team5.azienda.energia.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -50,7 +50,7 @@ public class UserService {
     }
 
 
-    public Page<User> findAllUsers( int page, int size, String sortBy) {
+    public Page<User> findAllUsers(int page, int size, String sortBy) {
         if (size > 50) size = 50;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         return userRepository.findAll(pageable);

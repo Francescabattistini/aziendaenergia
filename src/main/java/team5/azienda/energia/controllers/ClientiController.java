@@ -5,19 +5,26 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import team5.azienda.energia.entities.Cliente;
 import team5.azienda.energia.payloadDTO.ClienteDTO;
-import team5.azienda.energia.servicies.ClienteService;
+import team5.azienda.energia.services.ClienteService;
 
 @RestController
-@RequestMapping("/api/clienti")
+@RequestMapping("/api")
 public class ClientiController {
 
     @Autowired
     private ClienteService clienteService;
 
-    @GetMapping("")
+    @GetMapping("/clienti")
     public Page<Cliente> getAllClienti(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "15") int size,
                                        @RequestParam(defaultValue = "nomeContatto") String sortBy) {
+        return clienteService.findAll(page, size, sortBy);
+    }
+
+    @GetMapping("/clientiByFatturato")
+    public Page<Cliente> getAllClientiOrderByFatturato(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "15") int size,
+                                                       @RequestParam(defaultValue = "fatturatoAnnuale") String sortBy) {
         return clienteService.findAll(page, size, sortBy);
     }
 
