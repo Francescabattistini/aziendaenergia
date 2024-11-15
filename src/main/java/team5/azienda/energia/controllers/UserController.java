@@ -1,6 +1,7 @@
 package team5.azienda.energia.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -10,8 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.User;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.exceptions.NotFoundException;
+<<<<<<< Updated upstream
 import team5.azienda.energia.payloadDTO.UserDTO;
 import team5.azienda.energia.servicies.UserService;
+=======
+import team5.azienda.energia.payloads.UserDTO;
+import team5.azienda.energia.services.UserService;
+>>>>>>> Stashed changes
 
 import java.util.stream.Collectors;
 
@@ -40,7 +46,7 @@ public class UserController {
         if (validationResult.hasErrors()) {
             String message = validationResult.getAllErrors()
                     .stream()
-                    .map(objectError -> objectError.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.joining(". "));
             throw new BadRequestException("Ci sono stati errori nel payload! " + message);
         }
@@ -63,7 +69,7 @@ public class UserController {
         if (validationResult.hasErrors()) {
             String message = validationResult.getAllErrors()
                     .stream()
-                    .map(objectError -> objectError.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.joining(". "));
             throw new BadRequestException("Ci sono stati errori nel payload! " + message);
         }

@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:src/main/java/team5/azienda/energia/servicies/SecurityService.java
 package team5.azienda.energia.servicies;
+=======
+package team5.azienda.energia.services;
+>>>>>>> Stashed changes:src/main/java/team5/azienda/energia/services/SecurityService.java
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

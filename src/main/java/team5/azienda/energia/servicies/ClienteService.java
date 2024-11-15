@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.Cliente;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.exceptions.NotFoundException;
-import team5.azienda.energia.payloadDTO.ClienteDTO;
+import team5.azienda.energia.payloads.ClienteDTO;
 import team5.azienda.energia.repositories.ClienteRepo;
 
 import java.io.IOException;

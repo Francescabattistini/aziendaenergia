@@ -5,8 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.Cliente;
+<<<<<<< Updated upstream
 import team5.azienda.energia.payloadDTO.ClienteDTO;
 import team5.azienda.energia.servicies.ClienteService;
+=======
+import team5.azienda.energia.payloads.ClienteDTO;
+import team5.azienda.energia.services.ClienteService;
+
+import java.time.LocalDate;
+>>>>>>> Stashed changes
 
 @RestController
 @RequestMapping("/api/clienti")
