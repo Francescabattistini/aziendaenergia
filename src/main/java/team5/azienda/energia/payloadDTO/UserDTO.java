@@ -12,8 +12,7 @@ public record UserDTO(
         @NotBlank(message = "L'email non può essere vuota.")
         String email,
 
-        @Positive(message = "La password deve essere un numero positivo.") // Se la password è trattata come un intero
-        int password,
+        String password,
 
         @NotBlank(message = "Il nome non può essere vuoto.")
         String nome,

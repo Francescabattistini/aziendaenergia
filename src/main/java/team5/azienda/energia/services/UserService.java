@@ -2,6 +2,8 @@ package team5.azienda.energia.services;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -117,4 +119,9 @@ public class UserService {
 
         return url;
 
-}}
+}
+
+    public User findByEmail( String email) {
+        return this.userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
+    }
+}
