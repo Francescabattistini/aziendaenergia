@@ -6,17 +6,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.User;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.exceptions.NotFoundException;
 import team5.azienda.energia.payloadDTO.UserDTO;
-import team5.azienda.energia.servicies.UserService;
+import team5.azienda.energia.services.UserService;
 
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+
 
     @Autowired
     private UserService userService;
@@ -26,7 +29,7 @@ public class UserController {
     public Page<User> findAll(@RequestParam(defaultValue = "1") int page,
                               @RequestParam(defaultValue = "10") int size,
                               @RequestParam(defaultValue = "id") String sortBy) {
-        return this.userService.findAllUsers( page, size, sortBy);
+        return this.userService.findAllUsers(page, size, sortBy);
     }
 
     // 2. POST http://localhost:3005/users (+ req.body) --> 201
@@ -66,10 +69,17 @@ public class UserController {
         }
         return this.userService.updateUser(userId, body);
     }
+
     // 5. DELETE http://localhost:3005/users/{userId} --> 204
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable Long userId) {
         this.userService.findByIdAndDelete(userId);
+    }
+
+    //6.Upload Immagine
+    @PatchMapping("/{userId}/img")
+    public String uploadAvatar (@PathVariable long userId, @RequestParam("img") MultipartFile file) {
+        return this.userService.uploadImg(file, userId);
     }
 }

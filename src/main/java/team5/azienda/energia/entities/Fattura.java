@@ -12,25 +12,28 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "fatture")
 public class Fattura {
-    @Id
-    @GeneratedValue
-    @Setter(AccessLevel.NONE)
-    private long id;
 
-    @Column(name = "data_fattura")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    private Long id; // Usa 'Long' invece di 'long'
+
+    @Column(name = "data_fattura", nullable = false)
     private LocalDate dataFattura;
 
+    @Column(nullable = false)
     private double importo;
 
+    @Column(nullable = false)
     private int numero;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cliente_id", nullable = false)
     @ToString.Exclude
     private Cliente cliente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stato_fattura_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "stato_fattura_id", nullable = false)
     @ToString.Exclude
     private StatoFattura statoFattura;
 
