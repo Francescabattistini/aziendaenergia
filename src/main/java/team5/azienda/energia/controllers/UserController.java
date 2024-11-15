@@ -11,14 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.User;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.exceptions.NotFoundException;
-<<<<<<< Updated upstream
-import team5.azienda.energia.payloadDTO.UserDTO;
-import team5.azienda.energia.servicies.UserService;
-=======
 import team5.azienda.energia.payloads.UserDTO;
 import team5.azienda.energia.services.UserService;
->>>>>>> Stashed changes
-
 import java.util.stream.Collectors;
 
 @RestController
