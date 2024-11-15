@@ -1,22 +1,23 @@
 package team5.azienda.energia.payloadDTO;
 
 import jakarta.persistence.Embedded;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import team5.azienda.energia.entities.Provincia;
 
 public record ComuneDTO(
-        @Positive(message = "Il progressivo comune deve essere un numero positivo.")
-        int progressivo_comune,
+        @NotNull(message = "Il codice provincia non può essere nullo")
+        @Pattern(regexp = "\\d{3}", message= "Il codice provincia deve essere un numero di 3 cifre")
+        String codProvincia,
 
-        @NotBlank(message = "Il nome del comune non può essere vuoto.")
-        String nome_comune,
+        @NotNull(message = "Il codice comune non può essere nullo")
+        @Pattern(regexp = "\\d{3}", message = "Il codice comune deve essssere un numero di 3 cifre")
+        String codComune,
 
-        @NotNull(message = "La provincia non può essere nulla.")
-        @Embedded
-        Provincia provincia
+        @NotEmpty
+        String nome,
 
+        @NotEmpty
+        String provincia
 
 ) {
 }

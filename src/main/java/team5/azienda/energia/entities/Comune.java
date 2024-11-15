@@ -1,8 +1,10 @@
 package team5.azienda.energia.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -10,9 +12,29 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @AllArgsConstructor
+@Entity
+@Table(name = "comuni")
 public class Comune {
-   private int progressivo_comune;
-   private String nome_comune;
-   @Embedded
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Setter(AccessLevel.NONE)
+   private long id;
+   private String codiceComune;
+
+   private String nome;
+
+   @ManyToOne
+  @JoinColumn(name = "provincia_id")
    private Provincia provincia;
+
+   @OneToMany(mappedBy = "comune")
+   @JsonIgnore
+   private List<Indirizzo> indirizzi;
+
+   public Comune( String codiceComune, String nome, Provincia provincia) {
+      this.codiceComune = codiceComune;
+      this.nome = nome;
+      this.provincia = provincia;
+   }
+
 }
