@@ -9,13 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import team5.azienda.energia.entities.Role;
 import team5.azienda.energia.entities.User;
 import team5.azienda.energia.exceptions.BadRequestException;
 import team5.azienda.energia.exceptions.NotFoundException;
-import team5.azienda.energia.payloadDTO.UserDTO;
+import team5.azienda.energia.payloads.UserDTO;
 import team5.azienda.energia.repositories.RoleRepo;
 import team5.azienda.energia.repositories.UserRepository;
 
@@ -29,7 +30,8 @@ public class UserService {
     private Cloudinary cloudinaryUploader;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private PasswordEncoder bcrypt;
     @Autowired
     private RoleRepo roleRepo;
 
@@ -49,7 +51,7 @@ public class UserService {
         User user = new User();
         user.setUsername(body.username());
         user.setEmail(body.email());
-        user.setPassword(body.password());
+        user.setPassword(bcrypt.encode(body.password()));
         user.setNome(body.nome());
         user.setCognome(body.cognome());
         user.setAvatar(body.avatar());
@@ -112,16 +114,15 @@ public class UserService {
         } catch (IOException e) {
             throw new BadRequestException("Ci sono stati problemi con l'upload del file!");
         }
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id));
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         user.setAvatar(url);
         this.userRepository.save(user);
 
         return url;
 
-}
+    }
 
-    public User findByEmail( String email) {
+    public User findByEmail(String email) {
         return this.userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
     }
 }

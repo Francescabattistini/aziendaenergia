@@ -14,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import team5.azienda.energia.entities.User;
 import team5.azienda.energia.exceptions.NotFoundException;
 import team5.azienda.energia.exceptions.UnauthorizedException;
-import team5.azienda.energia.servicies.UserService;
+import team5.azienda.energia.services.UserService;
 
 import java.io.IOException;
 
@@ -39,7 +39,7 @@ public class JWTChecker extends OncePerRequestFilter {
             throw new UnauthorizedException("Inserire token nell' Authorization Header nel formato corretto!");
         }
 
-        String accessToken = authorizationHeader.split(" ")[1];
+        String accessToken = authorizationHeader.substring(7);
         jwt.verifyToken(accessToken);
 
         String idUtente = jwt.getIdFromToken(accessToken);
