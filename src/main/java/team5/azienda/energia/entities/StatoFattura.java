@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.util.List;
 
-@Setter //questo perchè non c'era?
+@Setter
 @Getter
 @NoArgsConstructor
 @ToString

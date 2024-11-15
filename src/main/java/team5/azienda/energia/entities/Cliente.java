@@ -12,6 +12,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "clienti")
+@Getter
 public class Cliente {
     @Id
     @GeneratedValue
