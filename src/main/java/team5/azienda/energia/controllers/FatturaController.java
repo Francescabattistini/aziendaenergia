@@ -1,6 +1,7 @@
 package team5.azienda.energia.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/fatture") // Corretto da "/fattures" a "/fatture"
+@RequestMapping("/fatture")
 public class FatturaController {
     @Autowired
     private FatturaService fatturaService;
@@ -36,7 +37,7 @@ public class FatturaController {
     public FatturaDTO save(@RequestBody @Validated FatturaDTO body, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
             String message = validationResult.getAllErrors().stream()
-                    .map(objectError -> objectError.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.joining(". "));
             throw new BadRequestException("Ci sono stati errori nel payload! " + message);
         }
@@ -68,7 +69,7 @@ public class FatturaController {
                                     BindingResult validationResult) {
         if (validationResult.hasErrors()) {
             String message = validationResult.getAllErrors().stream()
-                    .map(objectError -> objectError.getDefaultMessage())
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.joining(". "));
             throw new BadRequestException("Ci sono stati errori nel payload! " + message);
         }

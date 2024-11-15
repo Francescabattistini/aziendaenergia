@@ -50,8 +50,7 @@ public class Cliente {
     private int telefonoContatto;
 
     @Column(name = "logo_aziendale")
-    private String logoAziendale;// TODO modifica per fare il placeholder vedi se in service o nel costruttore
-
+    private String logoAziendale;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude

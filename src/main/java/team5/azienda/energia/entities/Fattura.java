@@ -16,7 +16,7 @@ public class Fattura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private Long id; // Cambiato da 'long' a 'Long'
+    private Long id;
 
     @Column(name = "data_fattura", nullable = false)
     private LocalDate dataFattura;
