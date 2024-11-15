@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import team5.azienda.energia.entities.Fattura;
 import team5.azienda.energia.exceptions.BadRequestException;
-import team5.azienda.energia.payloadDTO.FatturaDTO;
+import team5.azienda.energia.payloads.FatturaDTO;
 import team5.azienda.energia.services.FatturaService;
 
 import java.time.LocalDate;

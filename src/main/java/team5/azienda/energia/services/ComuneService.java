@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import team5.azienda.energia.entities.Comune;
 import team5.azienda.energia.entities.Provincia;
 import team5.azienda.energia.exceptions.NotFoundException;
-import team5.azienda.energia.payloadDTO.ComuneDTO;
+import team5.azienda.energia.payloads.ComuneDTO;
 import team5.azienda.energia.repositories.ComuneRepository;
 
 import java.io.BufferedReader;
@@ -34,9 +34,9 @@ public class ComuneService {
     }
 
     public Comune save(ComuneDTO body) {
-        Provincia p = ps.findByNome(body.provincia());
+        Provincia p = ps.findByNome(body.provincia().getNome());
 
-        return this.cr.save(new Comune(body.codComune(), body.nome(), p));
+        return this.cr.save(new Comune(body.progressivoComune(), body.nomeComune(), p));
     }
 
     public Page<Comune> findAll(int page, int size, String sortBy) {
